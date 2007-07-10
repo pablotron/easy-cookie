@@ -87,7 +87,7 @@ EasyCookie = (function() {
         opt.expires *= MS_PER_DAY;
 
         // set cookie expiration date
-        cfg.expires = new Date(now.getTime + opt.expires);
+        cfg.expires = new Date(now.getTime() + opt.expires);
         cfg.expires = cfg.expires.toGMTString();
       }
 
