@@ -3,8 +3,8 @@ EasyCookie 0.1.0 README
 
 Simple JavaScript cookie handling API.
 
-Usage:
-
+Usage
+=====
 Get a cookie:
 
   val = EasyCookie.get('some_key');
@@ -17,6 +17,11 @@ Set a cookie:
 Remove a cookie:
 
   old_val = EasyCookie.remove('some_key');
+
+Check to see if cookies are enabled:
+
+  status = EasyCookie.enabled ? 'enabled' : 'not enabled';
+  alert('Cookies are ' + status);
 
 Set also has several optional parameters, which can be passed like so:
 
