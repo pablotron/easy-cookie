@@ -1,16 +1,18 @@
 EasyCookie = (function() {
-  var test_key = '__ENABLED_TEST__', 
-      epoch_str = 'Thu, 01-Jan-1970 00:00:01 GMT',
-      ms_per_day = 1000 * 60 * 60 * 24,
-      encode_keys = ['expires', 'path', 'domain'],
-      ret_cookie, get_now, encode_hash;
+  var TEST_KEY = '__ENABLED_TEST__', 
+      EPOCH_STR = 'Thu, 01-Jan-1970 00:00:01 GMT',
+      MS_PER_DAY = 1000 * 60 * 60 * 24,
+      ENCODE_KEYS = ['expires', 'path', 'domain'],
+      ret_cookie, get_now, cookify, check_enabled;
 
+  // get the current timestamp
   get_now = function() {
     var now = new Date();
     now.setTime(now.getTime());
     return now;
   }
 
+  // convert the given key/value pair to a cookie
   cookify = function(c_key, c_val /*, opt */) {
      var i, key, val, ret = [],
          opt = (arguments.length > 2) ? arguments[2] : {};
@@ -19,36 +21,35 @@ EasyCookie = (function() {
     ret.push(c_key + '=' + escape(c_val));
 
     // iterate over option keys and check each one
-    var (i = 0; i < encode_keys.length; i++) {
-      key = encode_keys[i];
+    var (i = 0; i < ENCODE_KEYS.length; i++) {
+      key = ENCODE_KEYS[i];
       if (val = opt[key])
         ret.push(key + '=' + val);
     }
 
-    // build return string
-    ret = ret.join('; ');
-
     // append secure (if specified)
     if (opt.secure)
-      ret += '; secure';
+      ret.push('secure');
 
-    // return result
-    return ret;
+    // build and return result string
+    return ret.join('; ');
   }
 
+  // check to see if cookies are enabled
   check_enabled = function() {
-    var test_val = new Date();
+    var key = TEST_KEY, val = new Date();
 
     // generate test value
-    test_val = val.toGMTString();
+    val = val.toGMTString();
 
     // set test value
-    this.set(test_key, test_val);
+    this.set(key, val);
 
     // return cookie test
-    return (this.remove(test_key) == test_val);
+    return (this.remove(key) == val);
   }
 
+  // build return value
   ret_cookie = {
     /*
      * Set a cookie value.
@@ -66,7 +67,7 @@ EasyCookie = (function() {
 
       // if expires is set, convert it from days to milliseconds
       if (opt.expires) {
-        opt.expires *= ms_per_day;
+        opt.expires *= MS_PER_DAY;
 
         // set cookie expiration date
         cfg.expires = new Date(now.getTime + opt.expires);
@@ -123,7 +124,7 @@ EasyCookie = (function() {
      */
     remove: function(key) {
       var ret = ret_cookie.get(key), 
-          opt = { expires: epoch_str };
+          opt = { expires: EPOCH_STR };
 
       // delete cookie
       document.cookie = cookify(key, '', opt);
