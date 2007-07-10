@@ -1,0 +1,43 @@
+EasyCookie 0.1.0 README
+=======================
+
+Simple JavaScript cookie handling API.
+
+Usage:
+
+Get a cookie:
+
+  val = EasyCookie.get('some_key');
+
+Set a cookie:
+
+  val = 'this is a test string';
+  EasyCookie.get('some_key', val);
+
+Remove a cookie:
+
+  old_val = EasyCookie.remove('some_key');
+
+Set also has several optional parameters, which can be passed like so:
+
+  val = 'this is a test string';
+  EasyCookie.set('some_key', val, {
+    // expires in 10 days
+    expires: 10,
+
+    // limit cookie to domain 'foo.example.com'
+    domain: 'foo.example.com',
+
+    // limit cookie to path '/some/path'
+    path: '/some/path',
+
+    // restrict cookie to secure pages only
+    secure: true
+  });
+
+See test/test.js for usage examples.
+
+About the Author
+================
+Paul Duncan <pabs@pablotron.org>
+http://pablotron.org/
