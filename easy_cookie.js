@@ -21,7 +21,7 @@ EasyCookie = (function() {
     ret.push(c_key + '=' + escape(c_val));
 
     // iterate over option keys and check each one
-    var (i = 0; i < ENCODE_KEYS.length; i++) {
+    for (i = 0; i < ENCODE_KEYS.length; i++) {
       key = ENCODE_KEYS[i];
       if (val = opt[key])
         ret.push(key + '=' + val);
@@ -46,7 +46,8 @@ EasyCookie = (function() {
     this.set(key, val);
 
     // return cookie test
-    return (this.remove(key) == val);
+    this.enabled = (this.remove(key) == val);
+    return this.enabled;
   }
 
   // build return value
@@ -54,9 +55,25 @@ EasyCookie = (function() {
     /*
      * Set a cookie value.
      *
-     * Example:
+     * Examples:
      *
-     *   Cookie.set('test_cookie', 'test_value');
+     *   // simplest-case
+     *   EasyCookie.set('test_cookie', 'test_value');
+     *
+     *   // more complex example
+     *   EasyCookie.set('test_cookie', 'test_value', {
+     *     // expires in 13 days
+     *     expires: 13,
+     *
+     *     // restrict to given domain
+     *     domain: 'foo.example.com',
+     *
+     *     // restrict to given path
+     *     path: '/some/path',
+     *
+     *     // secure cookie only
+     *     secure: true
+     *   });
      *
      */
     set: function(key, val /*, opt */) {
@@ -91,7 +108,7 @@ EasyCookie = (function() {
      *
      * Example:
      *
-     *   val = Cookie.get('test_cookie');
+     *   val = EasyCookie.get('test_cookie');
      *
      */
     get: function(key) {
@@ -119,7 +136,7 @@ EasyCookie = (function() {
      *
      * Example:
      *
-     *   old_val = Cookie.remove('test_cookie');
+     *   old_val = EasyCookie.remove('test_cookie');
      *
      */
     remove: function(key) {
@@ -138,7 +155,7 @@ EasyCookie = (function() {
      *
      * Example:
      *
-     *   have_cookies = Cookie.enabled
+     *   have_cookies = EasyCookie.enabled
      *
      */
     enabled: false
