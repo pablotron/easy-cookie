@@ -1,9 +1,11 @@
 EasyCookie = (function() {
-  var TEST_KEY = '__ENABLED_TEST__', 
-      EPOCH_STR = 'Thu, 01-Jan-1970 00:00:01 GMT',
+  var EPOCH = 'Thu, 01-Jan-1970 00:00:01 GMT',
+      // milliseconds per day
       MS_PER_DAY = 1000 * 60 * 60 * 24,
+      // keys to encode 
       ENCODE_KEYS = ['expires', 'path', 'domain'],
-      ret_cookie, get_now, cookify, check_enabled;
+      // misc other vars
+      me, get_now, cookify, check_enabled;
 
   // private methods
 
@@ -13,9 +15,9 @@ EasyCookie = (function() {
    * This method is private.
    */
   get_now = function() {
-    var now = new Date();
-    now.setTime(now.getTime());
-    return now;
+    var ret = new Date();
+    ret.setTime(ret.getTime());
+    return ret;
   }
 
   /*
@@ -51,7 +53,7 @@ EasyCookie = (function() {
    * This method is private.
    */
   check_enabled = function() {
-    var key = TEST_KEY, val = new Date();
+    var key = '__EC_TEST__', val = new Date();
 
     // generate test value
     val = val.toGMTString();
@@ -67,7 +69,7 @@ EasyCookie = (function() {
   // public methods
 
   // build return object
-  ret_cookie = {
+  me = {
     /*
      * Set a cookie value.
      *
@@ -179,8 +181,8 @@ EasyCookie = (function() {
      *
      */
     remove: function(key) {
-      var ret = ret_cookie.get(key), 
-          opt = { expires: EPOCH_STR };
+      var ret = me.get(key), 
+          opt = { expires: EPOCH };
 
       // delete cookie
       document.cookie = cookify(key, '', opt);
@@ -249,8 +251,8 @@ EasyCookie = (function() {
   };
 
   // set enabled attribute
-  ret_cookie.enabled = check_enabled.call(ret_cookie);
+  me.enabled = check_enabled.call(me);
 
   // return self
-  return ret_cookie;
+  return me;
 }());
