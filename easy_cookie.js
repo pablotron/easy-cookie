@@ -5,14 +5,24 @@ EasyCookie = (function() {
       ENCODE_KEYS = ['expires', 'path', 'domain'],
       ret_cookie, get_now, cookify, check_enabled;
 
-  // get the current timestamp
+  // private methods
+
+  /*
+   * Get the current time.
+   *
+   * This method is private.
+   */
   get_now = function() {
     var now = new Date();
     now.setTime(now.getTime());
     return now;
   }
 
-  // convert the given key/value pair to a cookie
+  /*
+   * Convert the given key/value pair to a cookie.
+   *
+   * This method is private.
+   */
   cookify = function(c_key, c_val /*, opt */) {
      var i, key, val, ret = [],
          opt = (arguments.length > 2) ? arguments[2] : {};
@@ -35,7 +45,11 @@ EasyCookie = (function() {
     return ret.join('; ');
   }
 
-  // check to see if cookies are enabled
+  /*
+   * Check to see if cookies are enabled.
+   *
+   * This method is private.
+   */
   check_enabled = function() {
     var key = TEST_KEY, val = new Date();
 
@@ -50,7 +64,9 @@ EasyCookie = (function() {
     return this.enabled;
   }
 
-  // build return value
+  // public methods
+
+  // build return object
   ret_cookie = {
     /*
      * Set a cookie value.
