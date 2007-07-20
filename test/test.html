@@ -3,19 +3,58 @@
     <title>EasyCookie Test Page</title>
     <script type='text/javascript' src='../easy_cookie.js'></script>
     <script type='text/javascript' src='test.js'></script>
+    <style type='text/css'>
+      div#output {
+        width: 400px;
+        padding: 5px;
+        border: 1px solid #333;
+        background-color: #fcfcfc;
+      }
+    </style>
   </head>
 
   <body>
     <b>EasyCookie Test Page</b>
 
     <div id='cfg'>
-      <input type='text' id='test' value=''>
+      <table border='0'>
+        <tr>
+          <td><label for='name'>Name:</label></td>
+          <td><input type='text' id='name' value='test_key'/></td>
+        </tr>
+        <tr>
+          <td><label for='name'>Value:</label></td>
+          <td><input type='text' id='test' value=''/></td>
+        </tr>
+      </table>
 
-      <ul>
-        <li><a href='javascript:Test.set()'>Set Cookie</a></li>
-        <li><a href='javascript:Test.get()'>Get Cookie</a></li>
-        <li><a href='javascript:Test.rm()'>Remove Cookie</a></li>
-      </ul>
+      <p>
+        <b>Tests:</b>
+
+        <ul>
+          <li><a href='javascript:Test.set()'>
+            Set Cookie (Test <code>EasyCookie.set()</code>)
+          </a></li>
+          <li><a href='javascript:Test.get()'>
+            Get Cookie (test <code>EasyCookie.get()</code>)
+          </a></li>
+          <li><a href='javascript:Test.keys()'>
+            Get All Keys (Test <code>EasyCookie.keys()</code>)
+          </a></li>
+          <li><a href='javascript:Test.all()'>
+            Get All Key/Value Pairs (Test <code>EasyCookie.all()</code>)
+          </a></li>
+          <li><a href='javascript:Test.rm()'>
+            Remove Cookie (Test <code>EasyCookie.rm()</code>)
+          </a></li>
+        </ul>
+      </p>
+
+      <p>
+        <b>Output:</b>
+        <div id='output'></div>
+      </p>
+
     </div>
 
   </body>

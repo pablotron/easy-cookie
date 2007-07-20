@@ -225,7 +225,7 @@ EasyCookie = (function() {
     all: function() {
       var c = document.cookie, 
           pairs = c.split('; '),
-          i, pair, ret = {};
+          i, pair, ret = [];
 
       // iterate over each key=val pair and grab the key
       for (i = 0; i < pairs.length; i++) {
