@@ -3,7 +3,7 @@ EasyCookie = (function() {
       // milliseconds per day
       MS_PER_DAY = 1000 * 60 * 60 * 24,
       // keys to encode 
-      ENCODE_KEYS = ['expires', 'path', 'domain'];
+      ENCODE_KEYS = ['expires', 'path', 'domain'],
       me, esc = escape, un = unescape;
 
   // private methods
