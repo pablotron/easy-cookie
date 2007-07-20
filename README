@@ -1,4 +1,4 @@
-EasyCookie 0.1.0 README
+EasyCookie 0.2.0 README
 =======================
 
 Simple JavaScript cookie handling API.
@@ -40,7 +40,12 @@ Set also has several optional parameters, which can be passed like so:
     secure: true
   });
 
-See test/test.js for usage examples.
+You can also get a list of existing cookies like so:
+
+  // get an array of cookie names
+  keys = EasyCookie.keys();
+
+See test/test.js for examples of all methods.
 
 About the Author
 ================
