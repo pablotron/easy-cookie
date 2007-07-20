@@ -3,9 +3,8 @@ EasyCookie = (function() {
       // milliseconds per day
       MS_PER_DAY = 1000 * 60 * 60 * 24,
       // keys to encode 
-      ENCODE_KEYS = ['expires', 'path', 'domain'],
-      // misc other vars
-      me, get_now, cookify, check_enabled;
+      ENCODE_KEYS = ['expires', 'path', 'domain'];
+      me, esc = escape, un = unescape;
 
   // private methods
 
@@ -14,7 +13,7 @@ EasyCookie = (function() {
    *
    * This method is private.
    */
-  get_now = function() {
+  var get_now = function() {
     var ret = new Date();
     ret.setTime(ret.getTime());
     return ret;
@@ -25,12 +24,12 @@ EasyCookie = (function() {
    *
    * This method is private.
    */
-  cookify = function(c_key, c_val /*, opt */) {
+  var cookify = function(c_key, c_val /*, opt */) {
      var i, key, val, ret = [],
          opt = (arguments.length > 2) ? arguments[2] : {};
 
     // add key and value
-    ret.push(escape(c_key) + '=' + escape(c_val));
+    ret.push(esc(c_key) + '=' + esc(c_val));
 
     // iterate over option keys and check each one
     for (i = 0; i < ENCODE_KEYS.length; i++) {
@@ -52,7 +51,7 @@ EasyCookie = (function() {
    *
    * This method is private.
    */
-  check_enabled = function() {
+  var alive = function() {
     var key = '__EC_TEST__', val = new Date();
 
     // generate test value
@@ -130,7 +129,7 @@ EasyCookie = (function() {
      *
      */
     has: function(key) {
-      key = escape(key);
+      key = esc(key);
 
       var c = document.cookie,
           ofs = c.indexOf(key + '='),
@@ -150,7 +149,7 @@ EasyCookie = (function() {
      *
      */
     get: function(key) {
-      key = escape(key);
+      key = esc(key);
 
       var c = document.cookie, 
           ofs = c.indexOf(key + '='),
@@ -168,7 +167,7 @@ EasyCookie = (function() {
         end = c.length;
 
       // return unescaped value
-      return unescape(c.substring(len, end));
+      return un(c.substring(len, end));
     },
 
     /*
@@ -208,7 +207,7 @@ EasyCookie = (function() {
       // iterate over each key=val pair and grab the key
       for (i = 0; i < pairs.length; i++) {
         pair = pairs[i].split('=');
-        ret.push(unescape(pair[0]));
+        ret.push(un(pair[0]));
       }
 
       // return results
@@ -232,7 +231,7 @@ EasyCookie = (function() {
       // iterate over each key=val pair and grab the key
       for (i = 0; i < pairs.length; i++) {
         pair = pairs[i].split('=');
-        ret.push([unescape(pair[0]), unescape(pair[1])]);
+        ret.push([un(pair[0]), un(pair[1])]);
       }
 
       // return results
@@ -251,7 +250,7 @@ EasyCookie = (function() {
   };
 
   // set enabled attribute
-  me.enabled = check_enabled.call(me);
+  me.enabled = alive.call(me);
 
   // return self
   return me;
