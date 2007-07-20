@@ -28,7 +28,7 @@ EasyCookie = (function() {
          opt = (arguments.length > 2) ? arguments[2] : {};
 
     // add key and value
-    ret.push(c_key + '=' + escape(c_val));
+    ret.push(escape(c_key) + '=' + escape(c_val));
 
     // iterate over option keys and check each one
     for (i = 0; i < ENCODE_KEYS.length; i++) {
@@ -128,6 +128,8 @@ EasyCookie = (function() {
      *
      */
     has: function(key) {
+      key = escape(key);
+
       var c = document.cookie,
           ofs = c.indexOf(key + '='),
           len = ofs + key.length + 1,
@@ -146,6 +148,8 @@ EasyCookie = (function() {
      *
      */
     get: function(key) {
+      key = escape(key);
+
       var c = document.cookie, 
           ofs = c.indexOf(key + '='),
           len = ofs + key.length + 1,
@@ -182,6 +186,54 @@ EasyCookie = (function() {
       document.cookie = cookify(key, '', opt);
 
       // return value
+      return ret;
+    },
+
+    /*
+     * Get a list of cookie names.
+     *
+     * Example:
+     *
+     *   // get all cookie names
+     *   cookie_keys = EasyCookie.keys();
+     *
+     */
+    keys: function() {
+      var c = document.cookie, 
+          pairs = c.split('; '),
+          i, pair, ret = [];
+
+      // iterate over each key=val pair and grab the key
+      for (i = 0; i < pairs.length; i++) {
+        pair = pairs[i].split('=');
+        ret.push(unescape(pair[0]));
+      }
+
+      // return results
+      return ret;
+    },
+  
+    /*
+     * Get an array of all cookie key/value pairs.
+     *
+     * Example:
+     *
+     *   // get all cookies
+     *   all_cookies = EasyCookie.all();
+     *
+     */
+    all: function() {
+      var c = document.cookie, 
+          pairs = c.split('; '),
+          i, pair, ret = {};
+
+      // iterate over each key=val pair and grab the key
+      for (i = 0; i < pairs.length; i++) {
+        pair = pairs[i].split('=');
+        ret.push([unescape(pair[0]), unescape(pair[1])]);
+      }
+
+      // return results
       return ret;
     },
 
