@@ -120,6 +120,24 @@ EasyCookie = (function() {
     },
 
     /*
+     * Check to see if the given cookie exists.
+     *
+     * Example:
+     *
+     *   val = EasyCookie.get('test_cookie');
+     *
+     */
+    has: function(key) {
+      var c = document.cookie,
+          ofs = c.indexOf(key + '='),
+          len = ofs + key.length + 1,
+          sub = c.substring(0, key.length);
+
+      // check to see if key exists
+      return ((!ofs && key != sub) || ofs < 0) ? false : true;
+    },
+
+    /*
      * Get a cookie value.
      *
      * Example:
@@ -128,9 +146,10 @@ EasyCookie = (function() {
      *
      */
     get: function(key) {
-      var ofs = document.cookie.indexOf(key + '='),
+      var c = document.cookie, 
+          ofs = c.indexOf(key + '='),
           len = ofs + key.length + 1,
-          sub = document.cookie.substring(0, key.length),
+          sub = c.substring(0, key.length),
           end;
 
       // check to see if key exists
@@ -138,12 +157,12 @@ EasyCookie = (function() {
         return null;
 
       // grab end of value
-      end = document.cookie.indexOf(';', len);
+      end = c.indexOf(';', len);
       if (end < 0) 
-        end = document.cookie.length;
+        end = c.length;
 
       // return unescaped value
-      return unescape(document.cookie.substring(len, end));
+      return unescape(c.substring(len, end));
     },
 
     /*
