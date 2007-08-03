@@ -238,6 +238,11 @@ EasyCookie = (function() {
       return ret;
     },
 
+    /* 
+     * Version of EasyCookie
+     */
+    version: '0.2.0',
+
     /*
      * Are cookies enabled?
      *
