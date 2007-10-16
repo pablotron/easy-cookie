@@ -45,6 +45,20 @@ You can also get a list of existing cookies like so:
   // get an array of cookie names
   keys = EasyCookie.keys();
 
+Also, EasyCookie only exposes one reference in the global namespace (the
+top-level EasyCookie object), and that can be easily embedded in an
+existing API by editing easy_cookie.js (or easy_cookie-min.js) and
+replacing the very first EasyCookie = with something else, for example:
+
+  // definition of ExampleProject namespace
+  ExampleProject = {};
+
+  // more stuff here ...
+
+  // definition in easycookie.js
+
+  ExampleProject.EasyCookie = (function() {
+
 See test/test.js for examples of all methods.
 
 About the Author
