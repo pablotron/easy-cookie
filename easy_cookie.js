@@ -1,5 +1,5 @@
 /*
- * EasyCookie - an easy Javascript cookie handling interface.
+ * EasyCookie - Simple Javascript cookie library.
  *
  * License
  * =======
@@ -342,4 +342,3 @@ EasyCookie = (function() {
   // return self
   return me;
 }());
-
