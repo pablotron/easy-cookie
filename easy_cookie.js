@@ -80,7 +80,7 @@
 EasyCookie = (function() {
   var EPOCH = 'Thu, 01-Jan-1970 00:00:01 GMT',
       // milliseconds per day
-      MS_PER_DAY = 1000 * 60 * 60 * 24,
+      RATIO = 1000 * 60 * 60 * 24,
       // keys to encode 
       KEYS = ['expires', 'path', 'domain'],
       // wrappers for common globals
@@ -183,7 +183,7 @@ EasyCookie = (function() {
 
       // if expires is set, convert it from days to milliseconds
       if (opt.expires) {
-        opt.expires *= MS_PER_DAY;
+        opt.expires *= RATIO;
 
         // set cookie expiration date
         cfg.expires = new Date(now.getTime() + opt.expires);
