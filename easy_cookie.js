@@ -36,8 +36,10 @@ EasyCookie = (function() {
       // milliseconds per day
       MS_PER_DAY = 1000 * 60 * 60 * 24,
       // keys to encode 
-      ENCODE_KEYS = ['expires', 'path', 'domain'],
-      me, esc = escape, un = unescape;
+      KEYS = ['expires', 'path', 'domain'],
+      // wrappers for common globals
+      esc = escape, un = unescape, doc = document,
+      me; 
 
   // private methods
 
@@ -47,9 +49,9 @@ EasyCookie = (function() {
    * This method is private.
    */
   var get_now = function() {
-    var ret = new Date();
-    ret.setTime(ret.getTime());
-    return ret;
+    var r = new Date();
+    r.setTime(r.getTime());
+    return r;
   }
 
   /*
@@ -58,25 +60,25 @@ EasyCookie = (function() {
    * This method is private.
    */
   var cookify = function(c_key, c_val /*, opt */) {
-     var i, key, val, ret = [],
+     var i, key, val, r = [],
          opt = (arguments.length > 2) ? arguments[2] : {};
 
     // add key and value
-    ret.push(esc(c_key) + '=' + esc(c_val));
+    r.push(esc(c_key) + '=' + esc(c_val));
 
     // iterate over option keys and check each one
-    for (i = 0; i < ENCODE_KEYS.length; i++) {
-      key = ENCODE_KEYS[i];
+    for (i = 0; i < KEYS.length; i++) {
+      key = KEYS[i];
       if (val = opt[key])
-        ret.push(key + '=' + val);
+        r.push(key + '=' + val);
     }
 
     // append secure (if specified)
     if (opt.secure)
-      ret.push('secure');
+      r.push('secure');
 
     // build and return result string
-    return ret.join('; ');
+    return r.join('; ');
   }
 
   /*
@@ -85,16 +87,17 @@ EasyCookie = (function() {
    * This method is private.
    */
   var alive = function() {
-    var key = '__EC_TEST__', val = new Date();
+    var k = '__EC_TEST__', 
+        v = new Date();
 
     // generate test value
-    val = val.toGMTString();
+    v = v.toGMTString();
 
     // set test value
-    this.set(key, val);
+    this.set(k, v);
 
     // return cookie test
-    this.enabled = (this.remove(key) == val);
+    this.enabled = (this.remove(k) == v);
     return this.enabled;
   }
 
@@ -147,8 +150,8 @@ EasyCookie = (function() {
         if (opt[keys[i]])
           cfg[keys[i]] = opt[keys[i]];
 
-      ret = cookify(key, val, cfg);
-      document.cookie = ret;
+      var r = cookify(key, val, cfg);
+      doc.cookie = r;
 
       return val;
     },
@@ -164,7 +167,7 @@ EasyCookie = (function() {
     has: function(key) {
       key = esc(key);
 
-      var c = document.cookie,
+      var c = doc.cookie,
           ofs = c.indexOf(key + '='),
           len = ofs + key.length + 1,
           sub = c.substring(0, key.length);
@@ -184,7 +187,7 @@ EasyCookie = (function() {
     get: function(key) {
       key = esc(key);
 
-      var c = document.cookie, 
+      var c = doc.cookie, 
           ofs = c.indexOf(key + '='),
           len = ofs + key.length + 1,
           sub = c.substring(0, key.length),
@@ -212,15 +215,15 @@ EasyCookie = (function() {
      *   old_val = EasyCookie.remove('test_cookie');
      *
      */
-    remove: function(key) {
-      var ret = me.get(key), 
+    remove: function(k) {
+      var r = me.get(k), 
           opt = { expires: EPOCH };
 
       // delete cookie
-      document.cookie = cookify(key, '', opt);
+      doc.cookie = cookify(k, '', opt);
 
       // return value
-      return ret;
+      return r;
     },
 
     /*
@@ -233,18 +236,18 @@ EasyCookie = (function() {
      *
      */
     keys: function() {
-      var c = document.cookie, 
-          pairs = c.split('; '),
-          i, pair, ret = [];
+      var c = doc.cookie, 
+          ps = c.split('; '),
+          i, p, r = [];
 
       // iterate over each key=val pair and grab the key
-      for (i = 0; i < pairs.length; i++) {
-        pair = pairs[i].split('=');
-        ret.push(un(pair[0]));
+      for (i = 0; i < ps.length; i++) {
+        p = ps[i].split('=');
+        r.push(un(p[0]));
       }
 
       // return results
-      return ret;
+      return r;
     },
   
     /*
@@ -257,18 +260,18 @@ EasyCookie = (function() {
      *
      */
     all: function() {
-      var c = document.cookie, 
-          pairs = c.split('; '),
-          i, pair, ret = [];
+      var c = doc.cookie, 
+          ps = c.split('; '),
+          i, p, r = [];
 
       // iterate over each key=val pair and grab the key
-      for (i = 0; i < pairs.length; i++) {
-        pair = pairs[i].split('=');
-        ret.push([un(pair[0]), un(pair[1])]);
+      for (i = 0; i < ps.length; i++) {
+        p = ps[i].split('=');
+        r.push([un(p[0]), un(p[1])]);
       }
 
       // return results
-      return ret;
+      return r;
     },
 
     /* 

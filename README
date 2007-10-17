@@ -1,7 +1,7 @@
-EasyCookie 0.2.0 README
+EasyCookie 0.2.1 README
 =======================
 
-Simple JavaScript cookie handling API.
+Simple JavaScript cookie handling API.  
 
 Usage
 =====
@@ -45,7 +45,20 @@ You can also get a list of existing cookies like so:
   // get an array of cookie names
   keys = EasyCookie.keys();
 
-Also, EasyCookie only exposes one reference in the global namespace (the
+See test/test.js for examples of all methods.
+
+
+Notes
+=====
+The file "easy_cookie-min.js" is functionally identical to
+"easy_cookie.js" and has been shrunk to about 1900 bytes using
+Douglas Crockford's excellent Javascript minifier, which can be found at
+the following URL:
+
+  http://crockford.com/javascript/jsmin.html 
+
+Embedding EasyCookie in an existing Javascript library is easy.
+EasyCookie only exposes one reference in the global namespace (the
 top-level EasyCookie object), and that can be easily embedded in an
 existing API by editing easy_cookie.js (or easy_cookie-min.js) and
 replacing the very first EasyCookie = with something else, for example:
@@ -59,7 +72,6 @@ replacing the very first EasyCookie = with something else, for example:
 
   ExampleProject.EasyCookie = (function() {
 
-See test/test.js for examples of all methods.
 
 About the Author
 ================
