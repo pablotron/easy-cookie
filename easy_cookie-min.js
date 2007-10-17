@@ -12,4 +12,4 @@ cfg[keys[i]]=opt[keys[i]];var r=cookify(key,val,cfg);doc.cookie=r;return val;},h
 return null;end=c.indexOf(';',len);if(end<0)
 end=c.length;return un(c.substring(len,end));},remove:function(k){var r=me.get(k),opt={expires:EPOCH};doc.cookie=cookify(k,'',opt);return r;},keys:function(){var c=doc.cookie,ps=c.split('; '),i,p,r=[];for(i=0;i<ps.length;i++){p=ps[i].split('=');r.push(un(p[0]));}
 return r;},all:function(){var c=doc.cookie,ps=c.split('; '),i,p,r=[];for(i=0;i<ps.length;i++){p=ps[i].split('=');r.push([un(p[0]),un(p[1])]);}
-return r;},version:'0.2.0',enabled:false};me.enabled=alive.call(me);return me;}());
+return r;},version:'0.2.1',enabled:false};me.enabled=alive.call(me);return me;}());
