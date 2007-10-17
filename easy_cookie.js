@@ -1,6 +1,52 @@
 /*
  * EasyCookie - an easy Javascript cookie handling interface.
  *
+ * Usaging EasyCookie
+ * ==================
+ * Get a cookie:
+ * 
+ *   val = EasyCookie.get('some_key');
+ * 
+ * Set a cookie:
+ * 
+ *   val = 'this is a test string';
+ *   EasyCookie.get('some_key', val);
+ * 
+ * Remove a cookie:
+ * 
+ *   old_val = EasyCookie.remove('some_key');
+ * 
+ * Check to see if cookies are enabled:
+ * 
+ *   status = EasyCookie.enabled ? 'enabled' : 'not enabled';
+ *   alert('Cookies are ' + status);
+ * 
+ * Set also has several optional parameters, which can be passed like so:
+ * 
+ *   val = 'this is a test string';
+ *   EasyCookie.set('some_key', val, {
+ *     // expires in 10 days
+ *     expires: 10,
+ * 
+ *     // limit cookie to domain 'foo.example.com'
+ *     domain: 'foo.example.com',
+ * 
+ *     // limit cookie to path '/some/path'
+ *     path: '/some/path',
+ * 
+ *     // restrict cookie to secure pages only
+ *     secure: true
+ *   });
+ * 
+ * You can also get a list of existing cookies like so:
+ * 
+ *   // get an array of cookie names
+ *   keys = EasyCookie.keys();
+ * 
+ * See test/test.js for examples of all methods.
+ *
+ * License
+ * =======
  * Copyright (C) 2007 Paul Duncan <pabs@pablotron.org>
  * 
  * All rights reserved.
